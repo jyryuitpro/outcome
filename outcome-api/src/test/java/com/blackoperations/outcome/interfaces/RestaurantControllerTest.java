@@ -26,7 +26,6 @@ class RestaurantControllerTest {
         mvc = MockMvcBuilders.standaloneSetup(restaurantController).build();
     }
 
-//    @Disabled
     @Test
     void list() throws Exception {
         mvc.perform(get("/restaurants"))
