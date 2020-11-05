@@ -1,10 +1,12 @@
 package com.blackoperations.outcome.interfaces;
 
+import com.blackoperations.outcome.domain.RestaurantRepository;
+import com.blackoperations.outcome.domain.RestaurantRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -18,6 +20,9 @@ class RestaurantControllerTest {
 
     @Autowired
     private RestaurantController restaurantController;
+
+//    @SpyBean(RestaurantRepositoryImpl.class)
+//    private RestaurantRepository restaurantRepository;
 
     private MockMvc mvc;
 
