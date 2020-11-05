@@ -17,11 +17,13 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
 
     @Override
     public List<Restaurant> findAll() {
+
         return restaurants;
     }
 
     @Override
     public Restaurant findById(Long id) {
+
         return restaurants.stream().filter(r -> r.getId().equals(id)).findFirst().orElse(null);
     }
 }
