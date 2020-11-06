@@ -30,7 +30,7 @@ class RestaurantControllerTest {
     private MockMvc mvc;
 
     @BeforeEach
-    void beforeEadch() {
+    void beforeEach() {
         mvc = MockMvcBuilders.standaloneSetup(restaurantController).build();
     }
 
