@@ -8,7 +8,7 @@ import static org.hamcrest.core.Is.is;
 class RestaurantTest {
 
     @Test
-    void creattion() {
+    void creation() {
         Restaurant restaurant = new Restaurant(1004L,"Bob zip", "Seoul");
 
         assertThat(restaurant.getId(), is(1004L));
