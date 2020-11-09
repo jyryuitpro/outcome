@@ -1,18 +1,26 @@
 package com.blackoperations.outcome.domain;
 
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Restaurant {
 
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String name;
 
     private String address;
 
+    @Transient
     private List<MenuItem> menuItems = new ArrayList<>();
 
     public Restaurant() {
