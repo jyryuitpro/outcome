@@ -1,6 +1,8 @@
 package com.blackoperations.outcome.domain;
 
 
+import lombok.*;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,22 +12,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Restaurant {
 
     @Id
     @GeneratedValue
     private Long id;
 
+//    @Setter
     private String name;
 
     private String address;
 
+//    private String regionName;
+//
+//    private String categoryName;
+//
+//    private String tagNames;
+
     @Transient
     private List<MenuItem> menuItems = new ArrayList<>();
-
-    public Restaurant() {
-
-    }
 
     public Restaurant(String name, String address) {
         this.name = name;
@@ -38,32 +48,8 @@ public class Restaurant {
         this.address = address;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
     public String getInformation() {
         return name + " in " + address;
-    }
-
-    public List<MenuItem> getMenuItems() {
-        return menuItems;
     }
 
     public void addMenuItem(MenuItem menuItem) {

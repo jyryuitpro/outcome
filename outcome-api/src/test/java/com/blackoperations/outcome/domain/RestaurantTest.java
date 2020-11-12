@@ -9,7 +9,8 @@ class RestaurantTest {
 
     @Test
     void creation() {
-        Restaurant restaurant = new Restaurant(1004L,"Bob zip", "Seoul");
+//        Restaurant restaurant = new Restaurant(1004L,"Bob zip", "Seoul");
+        Restaurant restaurant = Restaurant.builder().id(1004L).name("Bob zip").address("Seoul").build();
 
         assertThat(restaurant.getId(), is(1004L));
         assertThat(restaurant.getName(), is("Bob zip"));
@@ -18,7 +19,10 @@ class RestaurantTest {
 
     @Test
     void information() {
-        Restaurant restaurant = new Restaurant(1004L, "Bob zip", "Seoul");
+        Restaurant restaurant = Restaurant.builder().id(1004L).name("Bob zip").address("Seoul").build();
+
+//        restaurant.setName("Sool zip");
+
         assertThat(restaurant.getInformation(), is("Bob zip in Seoul"));
     }
 }
