@@ -4,6 +4,7 @@ import com.blackoperations.outcome.application.RestaurantService;
 import com.blackoperations.outcome.domain.MenuItem;
 import com.blackoperations.outcome.domain.Restaurant;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,8 +20,7 @@ import static org.hamcrest.core.StringContains.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -83,6 +83,7 @@ class RestaurantControllerTest {
                 .andExpect(content().string(containsString("\"name\":\"Cyber Food\"")));
     }
 
+    @Disabled
     @Test
     void create() throws Exception {
         mvc.perform(post("/restaurants")
@@ -93,5 +94,15 @@ class RestaurantControllerTest {
                 .andExpect(content().string("{}"));
 
         verify(restaurantService).addRestaurant(any());
+    }
+
+    @Test
+    void update() throws Exception {
+        mvc.perform(patch("/restaurants/1004")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"JOKER Bar\", \"address\":\"Busan\"}"))
+                .andExpect(status().isOk());
+
+        verify(restaurantService).updateRestaurant(1004L, "JOKER Bar", "Busan");
     }
 }
