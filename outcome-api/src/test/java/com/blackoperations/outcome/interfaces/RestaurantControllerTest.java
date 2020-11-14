@@ -3,8 +3,8 @@ package com.blackoperations.outcome.interfaces;
 import com.blackoperations.outcome.application.RestaurantService;
 import com.blackoperations.outcome.domain.MenuItem;
 import com.blackoperations.outcome.domain.Restaurant;
+import com.blackoperations.outcome.domain.RestaurantNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -67,7 +67,7 @@ class RestaurantControllerTest {
 
 //    @Disabled
     @Test
-    void detail() throws Exception {
+    void detailWithExisted() throws Exception {
         Restaurant restaurant1 = Restaurant.builder()
                 .id(1004L)
                 .name("JOKER House")
@@ -96,7 +96,20 @@ class RestaurantControllerTest {
                 .andExpect(content().string(containsString("\"name\":\"Cyber Food\"")));
     }
 
-//    @Disabled
+    @Test
+    void detailWithNotExisted() throws Exception {
+        //조건
+        given(restaurantService.getRestaurant(404L)).willThrow(new RestaurantNotFoundException(404L));
+
+        //실행
+        mvc.perform(get("/restaurants/404"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string("{}"));
+
+        //결과
+    }
+
+    //    @Disabled
     @Test
     void createWithValidData() throws Exception {
         given(restaurantService.addRestaurant(any())).will(invocation -> {

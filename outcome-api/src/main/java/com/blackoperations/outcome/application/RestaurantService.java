@@ -1,9 +1,6 @@
 package com.blackoperations.outcome.application;
 
-import com.blackoperations.outcome.domain.MenuItem;
-import com.blackoperations.outcome.domain.MenuItemRepository;
-import com.blackoperations.outcome.domain.Restaurant;
-import com.blackoperations.outcome.domain.RestaurantRepository;
+import com.blackoperations.outcome.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +28,7 @@ public class RestaurantService {
     }
 
     public Restaurant getRestaurant(Long id) {
-        Restaurant restaurant = restaurantRepository.findById(id).orElse(null);
+        Restaurant restaurant = restaurantRepository.findById(id).orElseThrow(() -> new RestaurantNotFoundException(id));
 
         List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
         restaurant.setMenuItems(menuItems);

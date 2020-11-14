@@ -1,6 +1,7 @@
 package com.blackoperations.outcome.application;
 
 import com.blackoperations.outcome.domain.*;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
@@ -69,7 +71,7 @@ class RestaurantServiceTest {
     }
 
     @Test
-    void getResaurant() {
+    void getResaurantWithExisted() {
         Restaurant restaurant = restaurantService.getRestaurant(1004L);
 
         assertThat(restaurant.getId(), is(1004L));
@@ -77,6 +79,15 @@ class RestaurantServiceTest {
         MenuItem menuItem = restaurant.getMenuItems().get(0);
 
         assertThat(menuItem.getName(), is("Kimchi"));
+    }
+
+    @Test
+    void getResaurantWithNotExisted() {
+        Restaurant restaurant = restaurantService.getRestaurant(404L);
+
+        //then (결과)
+        RestaurantNotFoundException e = assertThrows(RestaurantNotFoundException.class, () -> restaurantService.getRestaurant(404L));
+        Assertions.assertThat(e.getMessage()).isEqualTo("Could not find restaurant 404");
     }
 
     @Test
