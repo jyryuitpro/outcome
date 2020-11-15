@@ -1,15 +1,27 @@
 package com.blackoperations.outcome.application;
 
 import com.blackoperations.outcome.domain.MenuItem;
+import com.blackoperations.outcome.domain.MenuItemRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
 import java.util.List;
 
 @Service
 public class MenuItemService {
 
+    @Autowired
+    private MenuItemRepository menuItemRepository;
+
+    public MenuItemService(MenuItemRepository menuItemRepository) {
+        this.menuItemRepository = menuItemRepository;
+    }
 
     public void bulkUpdate(Long id, List<MenuItem> menuItems) {
-        // TODO: 2020-11-15  
+        for (MenuItem menuItem : menuItems) {
+            menuItem.setRestaurantId(id);
+            menuItemRepository.save(menuItem);
+        }
     }
 }
