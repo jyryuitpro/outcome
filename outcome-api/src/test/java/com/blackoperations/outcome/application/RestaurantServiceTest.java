@@ -3,6 +3,7 @@ package com.blackoperations.outcome.application;
 import com.blackoperations.outcome.domain.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -81,6 +82,7 @@ class RestaurantServiceTest {
         assertThat(menuItem.getName(), is("Kimchi"));
     }
 
+    @Disabled
     @Test
     void getResaurantWithNotExisted() {
         Restaurant restaurant = restaurantService.getRestaurant(404L);
