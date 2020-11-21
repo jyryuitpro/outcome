@@ -1,3 +1,5 @@
 rootProject.name = 'outcome'
 
-include 'outcome-api'
+include 'oucome-common'
+include 'outcome-admin-api'
+
