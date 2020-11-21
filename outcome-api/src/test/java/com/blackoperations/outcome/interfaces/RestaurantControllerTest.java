@@ -4,6 +4,7 @@ import com.blackoperations.outcome.application.RestaurantService;
 import com.blackoperations.outcome.domain.MenuItem;
 import com.blackoperations.outcome.domain.Restaurant;
 import com.blackoperations.outcome.domain.RestaurantNotFoundException;
+import com.blackoperations.outcome.domain.Review;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -69,32 +70,24 @@ class RestaurantControllerTest {
 //    @Disabled
     @Test
     void detailWithExisted() throws Exception {
-        Restaurant restaurant1 = Restaurant.builder()
+        Restaurant restaurant = Restaurant.builder()
                 .id(1004L)
                 .name("JOKER House")
                 .address("Seoul").build();
 
         MenuItem menuItem = MenuItem.builder().name("Kimchi").build();
-        restaurant1.setMenuItems(Arrays.asList(menuItem));
+        restaurant.setMenuItems(Arrays.asList(menuItem));
+        Review review = Review.builder().name("JOKER").score(5).description("Great!").build();
+        restaurant.setReviews(Arrays.asList(review));
 
-        Restaurant restaurant2 = Restaurant.builder()
-                .id(2020L)
-                .name("Cyber Food")
-                .address("Seoul").build();
-
-        given(restaurantService.getRestaurant(1004L)).willReturn(restaurant1);
-        given(restaurantService.getRestaurant(2020L)).willReturn(restaurant2);
+        given(restaurantService.getRestaurant(1004L)).willReturn(restaurant);
 
         mvc.perform(get("/restaurants/1004"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("\"id\":1004")))
                 .andExpect(content().string(containsString("\"name\":\"JOKER House\"")))
-                .andExpect(content().string(containsString("Kimchi")));
-
-        mvc.perform(get("/restaurants/2020"))
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("\"id\":2020")))
-                .andExpect(content().string(containsString("\"name\":\"Cyber Food\"")));
+                .andExpect(content().string(containsString("Kimchi")))
+                .andExpect(content().string(containsString("Great!")));
     }
 
     @Disabled
