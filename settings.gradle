@@ -2,4 +2,7 @@ rootProject.name = 'outcome'
 
 include 'oucome-common'
 include 'outcome-admin-api'
+include 'outcome-customer-api'
+include 'outcome-customer-api'
+include 'outcome-customer-api'
 
