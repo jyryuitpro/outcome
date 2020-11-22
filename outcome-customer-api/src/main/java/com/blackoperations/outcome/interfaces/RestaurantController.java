@@ -1,6 +1,7 @@
 package com.blackoperations.outcome.interfaces;
 
 import com.blackoperations.outcome.application.RestaurantService;
+import com.blackoperations.outcome.domain.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
