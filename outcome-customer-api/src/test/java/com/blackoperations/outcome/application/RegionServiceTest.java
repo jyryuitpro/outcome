@@ -12,7 +12,6 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -44,15 +43,6 @@ class RegionServiceTest {
         Region region = regions.get(0);
 
         //then
-        assertThat(region.getName(), is("Seoul"));
-    }
-
-    @Test
-    void addRegion() {
-        Region region = regionService.addRegion("Seoul");
-
-        verify(regionRepository).save(any());
-
         assertThat(region.getName(), is("Seoul"));
     }
 }
