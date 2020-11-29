@@ -3,12 +3,8 @@ package com.blackoperations.outcome.interfaces;
 import com.blackoperations.outcome.application.RestaurantService;
 import com.blackoperations.outcome.domain.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 @CrossOrigin
@@ -19,8 +15,8 @@ public class RestaurantController {
     private RestaurantService restaurantService;
 
     @GetMapping("/restaurants")
-    public List<Restaurant> list() {
-        List<Restaurant> restaurants = restaurantService.getRestaurants();
+    public List<Restaurant> list(@RequestParam("region") String region) {
+        List<Restaurant> restaurants = restaurantService.getRestaurants(region);
 
         return restaurants;
     }
