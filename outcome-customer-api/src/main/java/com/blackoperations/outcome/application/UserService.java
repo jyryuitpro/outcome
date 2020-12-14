@@ -17,8 +17,11 @@ public class UserService {
     @Autowired
     UserRepository userRepostory;
 
-    public UserService(UserRepository userRepostory) {
+    PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepostory, PasswordEncoder passwordEncoder) {
         this.userRepostory = userRepostory;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User registerUser(String email, String name, String password) {
@@ -26,8 +29,6 @@ public class UserService {
         if (existed.isPresent()) {
             throw new EmailExistedException(email);
         }
-
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
         String encodedPassword = passwordEncoder.encode(password);
 
@@ -42,6 +43,12 @@ public class UserService {
     }
 
     public User authenticate(String email, String password) {
-        return null;
+        User user = userRepostory.findByEmail(email).orElseThrow(() -> new EmailNotExistedException(email));
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new PasswordWrongException();
+        }
+
+        return user;
     }
 }
