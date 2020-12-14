@@ -41,7 +41,7 @@ public class UserService {
         return userRepostory.save(user);
     }
 
-    public void authenticate(String email, String password) {
-
+    public User authenticate(String email, String password) {
+        return null;
     }
 }
