@@ -40,4 +40,8 @@ public class UserService {
 
         return userRepostory.save(user);
     }
+
+    public void authenticate(String email, String password) {
+
+    }
 }
