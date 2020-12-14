@@ -96,6 +96,7 @@ class UserServiceTest {
         }).isInstanceOf(EmailNotExistedException.class);
     }
 
+    @Disabled
     @Test
     void authenticateWithWrongPassword() {
         String email = "tester@example.com";
