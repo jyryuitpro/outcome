@@ -3,7 +3,6 @@ package com.blackoperations.outcome.utils;
 import io.jsonwebtoken.Claims;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -22,7 +21,7 @@ class JwtUtilTest {
 
     @Test
     void createToken() {
-        String token = jwtUtil.createToken(1004L, "John");
+        String token = jwtUtil.createToken(1004L, "John", null);
 
         assertThat(token, containsString("."));
     }
