@@ -14,7 +14,6 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
@@ -38,30 +37,52 @@ class UserServiceTest {
     }
 
     @Test
-    public void registerUser() {
+    void authenticateWithValidAttributes() {
         String email = "tester@example.com";
-        String name = "Tester";
         String password = "test";
 
-        userService.registerUser(email, name, password);
+        User mockUser = User.builder().email(email).build();
 
-        verify(userRepository).save(any());
+        given(userRepository.findByEmail(email)).willReturn(Optional.of(mockUser));
+
+        given(passwordEncoder.matches(any(), any())).willReturn(true);
+
+        User user = userService.authenticate(email, password);
+
+        assertThat(user.getEmail(), is(email));
     }
 
+    @Disabled
     @Test
-    public void registerUserWithExistedEmail() {
+    void authenticateWithNotExistedEmail() {
         String email = "tester@example.com";
-        String name = "Tester";
         String password = "test";
 
-        User user = User.builder().build();
+        given(userRepository.findByEmail(email)).willReturn(Optional.empty());
 
-        given(userRepository.findByEmail(email)).willReturn(Optional.of(user));
+        userService.authenticate(email, password);
 
         assertThatThrownBy(() -> {
-            userService.registerUser(email, name, password);
-        }).isInstanceOf(EmailExistedException.class);
+            userService.authenticate(email, password);
+        }).isInstanceOf(EmailNotExistedException.class);
+    }
 
-        verify(userRepository, never()).save(any());
+    @Disabled
+    @Test
+    void authenticateWithWrongPassword() {
+        String email = "tester@example.com";
+        String password = "x";
+
+        User mockUser = User.builder().email(email).build();
+
+        given(userRepository.findByEmail(email)).willReturn(Optional.of(mockUser));
+
+        given(passwordEncoder.matches(any(), any())).willReturn(false);
+
+        userService.authenticate(email, password);
+
+        assertThatThrownBy(() -> {
+            userService.authenticate(email, password);
+        }).isInstanceOf(PasswordWrongException.class);
     }
 }

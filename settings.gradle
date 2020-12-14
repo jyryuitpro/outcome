@@ -3,4 +3,5 @@ rootProject.name = 'outcome'
 include 'outcome-common'
 include 'outcome-admin-api'
 include 'outcome-customer-api'
+include 'outcome-login-api'
 
